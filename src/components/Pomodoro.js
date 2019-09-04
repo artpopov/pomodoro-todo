@@ -23,12 +23,18 @@ export default class Pomodoro extends React.Component {
       isRunning: false,
       currentCycle: "work",
       pomodorosDone: 0,
+      timeLeft: this.state.work * 60,
       currentTime: this.format(this.state.work * 60)
     });
   };
 
   //здесь вся логика помидорного таймера
   toggleTimer = () => {
+    console.log(this.props.active);
+    if (this.state.isRunning && this.state.currentCycle === "work") {
+      console.log(this.state.work / 1000);
+      this.props.sendTick(this.props.active, this.state.work / 1000);
+    }
     if (this.state.isRunning === false) {
       this.setState({ isRunning: true });
       let timerID = setInterval(() => {
@@ -117,7 +123,7 @@ export default class Pomodoro extends React.Component {
           <Button onClick={() => this.stopTimer()}>Сброс</Button>
         </div>
         <div style={{ paddingBottom: "15px", fontSize: 18 }}>
-          Помидоров до длинного перерыва:{" "}
+          Помидоров до длительного перерыва:{" "}
           {this.state.pomodoros - this.state.pomodorosDone}
         </div>
       </Container>

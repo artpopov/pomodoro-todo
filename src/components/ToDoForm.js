@@ -16,7 +16,9 @@ export default class ToDoForm extends Component {
     this.props.onSubmit({
       id: shortid.generate(),
       text: this.state.text,
-      complete: false
+      pomodoros: 0,
+      complete: false,
+      picked: false
     });
     this.setState({
       text: ""
