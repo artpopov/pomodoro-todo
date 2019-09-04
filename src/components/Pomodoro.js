@@ -1,15 +1,16 @@
 import React from "react";
 import { Container, Button } from "semantic-ui-react";
 import PomodoroSettings from "./PomodoroSettings";
+import "./Pomodoro.css";
 
 export default class Pomodoro extends React.Component {
   state = {
     isRunning: false,
     timerID: null,
     currentTime: "25:00",
-    timeLeft: 5,
-    work: 0.1,
-    breakTime: 0.1,
+    timeLeft: 1500,
+    work: 25,
+    breakTime: 5,
     longBreak: 30,
     currentCycle: "work",
     pomodoros: 4,
@@ -108,16 +109,8 @@ export default class Pomodoro extends React.Component {
       >
         <PomodoroSettings updateSettings={this.updateSettings} />
         <div style={{ fontSize: 36 }}>{this.renderType()}</div>
-        <div
-          style={{
-            fontSize: 144,
-            height: "200px",
-            margin: "100px 0 -100px 0"
-          }}
-        >
-          {this.state.currentTime}
-        </div>
-        <div style={{ paddingBottom: "50px" }}>
+        <div className="timer">{this.state.currentTime}</div>
+        <div className="control-buttons">
           <Button onClick={() => this.toggleTimer()}>
             {!this.state.isRunning ? "Старт" : "Пауза"}{" "}
           </Button>
