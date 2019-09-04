@@ -1,13 +1,14 @@
 import React from "react";
 
 export default props => (
-  <div
+  <span
     style={{
-      display: "flex",
-      justifyContent: "center",
-      textDecoration: props.todo.complete ? "line-through" : ""
+      //   display: "flex",
+      //   justifyContent: "start",
+      textDecoration: props.todo.complete ? "line-through" : "",
+      fontSize: 16
     }}
   >
     {props.todo.text}
-  </div>
+  </span>
 );

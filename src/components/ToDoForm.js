@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import shortid from "shortid";
-import { Input } from "semantic-ui-react";
+import { Input, Form } from "semantic-ui-react";
 
 export default class ToDoForm extends Component {
   state = {
@@ -25,15 +25,16 @@ export default class ToDoForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.handleSubmit}>
         <Input
+          fluid
           input={this.state.text}
           action={{ icon: "plus" }}
           placeholder="Добавить задачу"
           onChange={this.handleChange}
           value={this.state.text}
         />
-      </form>
+      </Form>
     );
   }
 }

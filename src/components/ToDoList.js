@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ToDoForm from "./ToDoForm";
 import Todo from "./Todo";
-import { List, Button, Icon } from "semantic-ui-react";
+import { List, Button, Icon, Container } from "semantic-ui-react";
 
 export default class ToDoList extends Component {
   state = {
@@ -58,38 +58,39 @@ export default class ToDoList extends Component {
         break;
     }
     return (
-      <div>
-        <ToDoForm onSubmit={this.addTodo} />
-        <List celled verticalAlign="middle">
-          {visibleTodos.map(todo => (
-            <List.Item key={todo.id}>
-              <List.Content floated="left">
-                <Button onClick={() => this.toggleComplete(todo.id)}>
-                  <Icon name="trash alternate" />
-                </Button>
-              </List.Content>
-              <List.Content>
-                <Todo
-                  toggleComplete={() => this.toggleComplete(todo.id)}
-                  todo={todo}
-                />
-              </List.Content>
-              <List.Content floated="right">
-                <Button onClick={() => this.handleDeleteTodo(todo.id)}>
-                  <Icon name="trash alternate" />
-                </Button>
-              </List.Content>
-            </List.Item>
-          ))}
-        </List>
-        <div>
-          <button onClick={() => this.changeFilter("all")}>all</button>
-          <button onClick={() => this.changeFilter("active")}>active</button>
-          <button onClick={() => this.changeFilter("completed")}>
-            completed
-          </button>
-        </div>
-      </div>
+      <>
+        <Container>
+          <ToDoForm onSubmit={this.addTodo} />
+          <List incelled verticalAlign="middle">
+            {visibleTodos.map(todo => (
+              <List.Item key={todo.id}>
+                <List.Content floated="left">
+                  <Icon
+                    style={{ cursor: "Pointer" }}
+                    onClick={() => this.toggleComplete(todo.id)}
+                    name={todo.complete ? "check circle" : "circle outline"}
+                  />
+                  <Todo todo={todo} />
+                </List.Content>
+                <List.Content floated="right">
+                  <Button icon onClick={() => this.handleDeleteTodo(todo.id)}>
+                    <Icon name="trash alternate" />
+                  </Button>
+                </List.Content>
+              </List.Item>
+            ))}
+          </List>
+          <div>
+            <Button onClick={() => this.changeFilter("all")}>Все</Button>
+            <Button onClick={() => this.changeFilter("active")}>
+              Активные
+            </Button>
+            <Button onClick={() => this.changeFilter("completed")}>
+              Завершенные
+            </Button>
+          </div>
+        </Container>
+      </>
     );
   }
 }
