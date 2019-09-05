@@ -4,6 +4,8 @@ import Todo from "./Todo";
 import { List, Button, Icon, Container } from "semantic-ui-react";
 import Pomodoro from "./Pomodoro";
 
+import tomato from "./tomato-icon.png";
+
 export default class ToDoList extends Component {
   state = {
     todos: [
@@ -106,24 +108,32 @@ export default class ToDoList extends Component {
         <Container>
           <Pomodoro active={active} sendTick={this.countPoms} />
           <ToDoForm onSubmit={this.addTodo} />
-          <List celled verticalAlign="middle">
+          <List divided relaxed verticalAlign="middle">
             {visibleTodos.map(todo => (
               <List.Item key={todo.id}>
-                <List.Content floated="left" verticalAlign="middle">
-                  <Icon
-                    style={{ cursor: "Pointer" }}
-                    onClick={() => this.toggleComplete(todo.id)}
-                    name={todo.complete ? "check circle" : "circle outline"}
-                  />
+                <List.Icon
+                  style={{ cursor: "Pointer" }}
+                  onClick={() => this.toggleComplete(todo.id)}
+                  name={todo.complete ? "check circle" : "circle outline"}
+                  verticalAlign="middle"
+                />
+                <List.Content verticalAlign="middle">
                   <Todo togglePicked={this.togglePicked} todo={todo} />
-                </List.Content>
-                <List.Content floated="right" verticalAlign="middle">
-                  <span>
-                    {todo.pomodoros}
-                    <Button icon onClick={() => this.handleDeleteTodo(todo.id)}>
-                      <Icon name="trash alternate" />
-                    </Button>
-                  </span>
+                  <Button
+                    style={{ display: "flex", float: "right" }}
+                    icon
+                    onClick={() => this.handleDeleteTodo(todo.id)}
+                  >
+                    <Icon name="trash alternate" />
+                  </Button>
+                  {todo.pomodoros > 0 && (
+                    <span style={{ display: "flex", float: "right" }}>
+                      <span style={{ paddingTop: "10px" }}>
+                        {todo.pomodoros.toFixed(2)}
+                      </span>
+                      <img src={tomato} height="30px" alt="tomato" />
+                    </span>
+                  )}
                 </List.Content>
               </List.Item>
             ))}

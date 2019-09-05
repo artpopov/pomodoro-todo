@@ -14,7 +14,8 @@ export default class Pomodoro extends React.Component {
     longBreak: 30,
     currentCycle: "work",
     pomodoros: 4,
-    pomodorosDone: 0
+    pomodorosDone: 0,
+    jobChunk: 0
   };
 
   stopTimer = () => {
@@ -30,10 +31,13 @@ export default class Pomodoro extends React.Component {
 
   //здесь вся логика помидорного таймера
   toggleTimer = () => {
-    console.log(this.props.active);
+    let jobChunk = new Date().getTime();
+    this.setState({ jobChunk });
     if (this.state.isRunning && this.state.currentCycle === "work") {
-      console.log(this.state.work / 1000);
-      this.props.sendTick(this.props.active, this.state.work / 1000);
+      let dif; // работа над задачей в помидорах
+      dif = (new Date().getTime() - this.state.jobChunk) / 1000 / 60;
+      console.log(dif);
+      this.props.sendTick(this.props.active, dif / this.state.work);
     }
     if (this.state.isRunning === false) {
       this.setState({ isRunning: true });
@@ -105,7 +109,7 @@ export default class Pomodoro extends React.Component {
 
   render() {
     return (
-      <Container
+      <div
         style={{
           backgroundColor:
             this.state.currentCycle === "work" ? "#ff6347" : "#90ee90",
@@ -126,7 +130,7 @@ export default class Pomodoro extends React.Component {
           Помидоров до длительного перерыва:{" "}
           {this.state.pomodoros - this.state.pomodorosDone}
         </div>
-      </Container>
+      </div>
     );
   }
 }
